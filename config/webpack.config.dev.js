@@ -1,5 +1,8 @@
 'use strict';
 
+// IMPORTANT NOTE:
+// Search 'Custom' to show all the customizations made on this file!
+
 const fs = require('fs');
 const path = require('path');
 const resolve = require('resolve');
@@ -278,10 +281,10 @@ module.exports = {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              modules: true,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-              minimize: true,
-              sourceMap: true
+              modules: true,  // Custom - Previous value: none
+              localIdentName: '[name]__[local]__[hash:base64:5]',  // Custom - Previous value: none
+              minimize: true,  // Custom - Previous value: none
+              sourceMap: true  // Custom - Previous value: none
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
@@ -302,7 +305,13 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders({ 
+              importLoaders: 2,
+              modules: true,  // Custom - Previous value: none
+              localIdentName: '[name]__[local]__[hash:base64:5]',  // Custom - Previous value: none
+              minimize: true,  // Custom - Previous value: none
+              sourceMap: true  // Custom - Previous value: none
+            }, 'sass-loader'),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass

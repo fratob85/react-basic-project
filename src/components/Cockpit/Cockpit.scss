@@ -1,0 +1,28 @@
+.Cockpit {
+    .red {
+        color: red;
+    }
+
+    .bold {
+        font-weight: bold
+    }
+
+    .button {
+        outline: none !important;
+        background-color: #82bbbf;
+        color: #fff;
+        border: 1px solid #0d7aa0;
+        padding: 8px 30px !important;
+        box-shadow: 0 1px 4px #007da0;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+
+        &:hover,
+        &:active,
+        &.buttonActive {
+            background-color: #d2f6f9 !important;
+            color: #007da0 !important;
+        }
+    }
+}
