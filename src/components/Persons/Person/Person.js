@@ -1,56 +1,65 @@
-import React, {Component} from 'react';
-import classes from './Person.css';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+import classes from "./Person.css";
+import withClass from "../../../hoc/WithClass";
+import Aux from "../../../hoc/Aux";
+import { AuthContext } from "../../../containers/App";
 
 class Person extends Component {
-    constructor(props) {
-      super(props);
-      console.log('[Person.js] Inside constructor', props);
-      this.state = {
-        persons: [
-          {id: 'asdf1', name: 'Francesco', age: 33},
-          {id: 'asdf2', name: 'Gabriele', age: 33},
-          {id: 'asdf3', name: 'Chiara', age: 27}
-        ],
-        otherState: 'some other value',
-        showPersons: false
-      }
-    }
-  
-    componentWillMount() {
-      console.log('[Person.js] Inside componentWillMount()');
-    }
-  
-    componentDidMount() {
-      console.log('[Person.js] Inside componentDidMount()');
-    }
+  constructor(props) {
+    super(props);
+    console.log("[Person.js] Inside Constructor", props);
+    this.inputElement = React.createRef();
+  }
 
-    componentWillReceiveProps(nextProps) {
-        console.log('[Person.js] Inside componentWillReceiveProps()', nextProps);
-    }
+  componentWillMount() {
+    console.log("[Person.js] Inside componentWillMount()");
+  }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('[Person.js] Inside shouldComponentUpdate()', nextProps, nextState);
-        return nextProps !== this.props.persons;
+  componentDidMount() {
+    console.log("[Person.js] Inside componentDidMount()");
+    if (this.props.position === 0) {
+      this.inputElement.current.focus();
     }
+  }
 
-    componentWillUpdate(nextProps, nextState) {
-        console.log('[Person.js] Inside componentWillUpdate()', nextProps, nextState);
-    }
-    
-    componentDidUpdate() {
-        console.log('[Person.js] Inside componentDidUpdate()');
-    }
+  focus() {
+    this.inputElement.current.focus();
+  }
 
-    render() {
-        console.log('[Person.js] Inside render()');
-        return (
-            <div className={classes.Person}>
-                <p onClick={this.props.click}>I'm {this.props.name} and I'm {this.props.age} years old</p>
-                <p>{this.props.children}</p>
-                <input type="text" onChange={this.props.changed} value={this.props.name} />
-            </div>
-        )
-    }
+  render() {
+    console.log("[Person.js] Inside render()");
+    return (
+      <Aux>
+        <AuthContext.Consumer>
+          {auth => auth ? <p>I'm authenticated!</p> : null}
+        </AuthContext.Consumer>
+        <p onClick={this.props.click}>
+          I'm {this.props.name} and I am {this.props.age} years old!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          ref={this.inputElement}
+          type="text"
+          onChange={this.props.changed}
+          value={this.props.name}
+        />
+      </Aux>
+    );
+    // return [
+    //     <p key="1" onClick={this.props.click}>I'm {this.props.name} and I am {this.props.age} years old!</p>,
+    //     <p key="2">{this.props.children}</p>,
+    //     <input key="3" type="text" onChange={this.props.changed} value={this.props.name} />
+    // ]
+  }
 }
 
-export default Person;
+Person.propTypes = {
+  click: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func
+};
+
+export default withClass(Person, classes.Person);
